@@ -5,48 +5,71 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    EditText mail;
-    EditText password;
-    String email;
-    String passw;
+    Button btn1, btn2;
+    EditText email;
+    EditText pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mail= findViewById(R.id.email);
-        password= findViewById(R.id.pass);
+        email = findViewById(R.id.email1);
+        pass = findViewById(R.id.passwd);
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Login();
+
+
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(MainActivity.this, "CREATE YOUR ACCOUNT!", Toast.LENGTH_SHORT).show();
+                Intent reg=new Intent(MainActivity.this,RegisterActivity.class);
+                startActivity(reg);
+
+
+            }
+        });
+
+
     }
-    public void login(View view) {
-        email= mail.getText().toString();
-        passw= password.getText().toString();
+    public void Login() {
 
+        String mail = email.getText().toString().trim();
+        String password = pass.getText().toString().trim();
 
-
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Email is required!!!", Toast.LENGTH_LONG).show();
-            return;
+        if (mail.isEmpty()) {
+            Toast.makeText(MainActivity.this, "Enter your Email Please!", Toast.LENGTH_LONG).show();
         }
-        if (TextUtils.isEmpty(passw)){
-
-            Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show();
-
-            return;
+        if (password.isEmpty()) {
+            Toast.makeText(MainActivity.this, "Enter the Password Please!", Toast.LENGTH_LONG).show();
         }
-        if (passw.length()<8){
-            password.setError("password length must be greater 6 less than 32");
-            return;
-        }
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        startActivity(intent);
-        Toast.makeText(this, "WELCOME"    , Toast.LENGTH_LONG).show();
-    }
 
-    public void register(View view) {
-        Intent intent= new Intent(MainActivity.this,RegisterActivity.class);
-        startActivity(intent);
+        if (mail.equals("ibihe@gmail.com") && password.equals("1234")) {
+            Toast.makeText(MainActivity.this, "login success!", Toast.LENGTH_LONG).show();
+            Intent register = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(register);
+        } else {
+
+            Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
+        }
+
+
+
     }
 }
